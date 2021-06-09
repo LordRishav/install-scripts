@@ -11,6 +11,11 @@
 #You will also need my scripts as well
 
 git clone https://github.com/kibybyte/i3-xorg
+cd i3-xorg
+for file in $(pwd)/*
+do
+    location=$(cat $file | head -2 | tail -1 | awk '{printf $2}')
+
 
 sudo pacman -S xorg-xserver i3-gaps i3blocks paru-bin maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango nm-applet st dmenu ranger mate-calc chromium dunst redshift feh light --noconfirm
 
