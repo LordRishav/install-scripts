@@ -9,7 +9,7 @@
 #                                  pango, nm-applet, st, dmenu, ranger, mate-calc, chromium, 
 #                                  clipmenu, dunst, redshift, feh, light
 #
-#You will also need my scripts as well
+#You will also need my scripts as well. Remember to add ~/.local/bin to $PATH.
 
 
 git clone https://github.com/kibybyte/i3-xorg
@@ -19,6 +19,7 @@ rm -rf LICENSE
 for file in $(pwd)/*
 do
     location=$(cat $file | head -2 | tail -1 | awk '{printf $2}')
+    mkdir -p $location
     cat $file > $location
 done
 
