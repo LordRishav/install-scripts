@@ -28,6 +28,6 @@ do
 done
 
 
-sudo pacman -S xorg-server i3-gaps i3blocks maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc chromium dunst redshift feh light --noconfirm
+sudo pacman -S xorg-server i3-gaps i3blocks maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc chromium dunst redshift feh light xorg-xinit --noconfirm
 
 #paru -S clipmenu --noconfirm
