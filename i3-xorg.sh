@@ -11,6 +11,7 @@
 #
 #You will also need my scripts as well. Remember to add ~/.local/bin to $PATH.
 
+set -x
 
 git clone https://github.com/kibybyte/i3-xorg
 cd i3-xorg
