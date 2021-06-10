@@ -19,8 +19,10 @@ rm -rf $(pwd)/LICENSE
 for file in $(pwd)/*
 do
     location=$(cat $file | head -2 | tail -1 | awk '{printf $2}')
-    [ -d "${location%/*}" ]
+    if [ -d "${location%/*}" ]
+    then
         mkdir -p "${location%/*}"
+    fi
     cat $file > $location
 done
 
