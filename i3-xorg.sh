@@ -14,12 +14,13 @@
 
 git clone https://github.com/kibybyte/i3-xorg
 cd i3-xorg
-rm -rf LICENSE
+rm -rf $(pwd)/LICENSE
 
 for file in $(pwd)/*
 do
     location=$(cat $file | head -2 | tail -1 | awk '{printf $2}')
-    mkdir -p $location
+    [ -d "${location%/*}" ]
+        mkdir -p "${location%/*}"
     cat $file > $location
 done
 
