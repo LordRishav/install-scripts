@@ -11,7 +11,6 @@
 #
 #You will also need my scripts as well. Remember to add ~/.local/bin to $PATH.
 
-set -x
 
 git clone https://github.com/kibybyte/i3-xorg
 cd i3-xorg
@@ -20,6 +19,7 @@ rm -rf $(pwd)/LICENSE
 for file in $(pwd)/*
 do
     location=$(cat $file | head -2 | tail -1 | awk '{printf $2}')
+    location="$(eval "echo $location")"
     if [ ! -d "${location%/*}" ]
     then
         mkdir -p "${location%/*}"
