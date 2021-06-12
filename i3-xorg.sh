@@ -11,6 +11,7 @@
 #
 #You will also need my scripts as well. Remember to add ~/.local/bin to $PATH.
 
+set -x
 
 git clone https://github.com/kibybyte/i3-xorg
 cd i3-xorg
@@ -27,7 +28,7 @@ do
 done
 
 
-sudo pacman -S xorg-server i3-gaps i3blocks maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc chromium dunst redshift feh light --noconfirm
+sudo pacman -S xorg-server i3-gaps i3blocks maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc chromium dunst redshift feh light xorg-xinit --noconfirm
 
 git clone https://aur.archlinux.org/paru-bin.git
 cd paru-bin && makepkg -si
