@@ -4,8 +4,8 @@
 
 #Dependencies: git, pacman, a vanilla install of Arch Linux with the base-devel package 
 #Packages which will be installed: sway waybar wl-clipboard xfce4-terminal grim slurp neovim otf-font-awesome pulseaudio pulseaudio-alsa pulse
-				   audio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc 
-				   chromium dunst light ttf-ms-fonts adwaita-qt clipman
+#				   audio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc 
+#				   chromium dunst light ttf-ms-fonts adwaita-qt clipman
 #                                  
 #                                  
 #                                  
