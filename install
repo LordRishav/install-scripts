@@ -41,6 +41,7 @@ arch-chroot /mnt echo "127.0.0.1       localhost" >> /etc/hosts
 arch-chroot /mnt echo "::1             localhost" >> /etc/hosts
 arch-chroot /mnt echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
 
+print "Set root password"
 arch-chroot /mnt passwd
 
 printf "username: "
