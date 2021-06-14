@@ -1,50 +1,59 @@
 #!/bin/sh
 
-#First and foremost you have to manually make paritions with cfdisk and mount them. This script 
-#is meant to be mountpoint independent. However it assumes 2 partitions: / and /home. It is also
-#assumed that you have mounted your respective partitions in /mnt and so forth. Edit it as you
+#It is assumed you will need at the most 3 partitions: /, /boot and /home. It is also
+#assumed that you want partitions to be mounted at /mnt and so forth. Edit it as you
 #see fit. Further it is to be noted that this script assumes a BIOS installation. Edit it if you
 #you want, however it would make more sense to use the official installer that is packaged with
 #Arch Linux for a UEFI install.
 
+echo "Press Ctrl+D to skip mountpoint. Order is root, then boot, then home"
+lsblk
+echo "select root partition: "
+read root && mount $root /mnt
+echo "select boot partition: "
+read boot && mount $boot /mnt/boot
+echo "select home partition: "
+read home && mount $home /mnt/home
+
 reflector --download-timeout 1 --protocol https --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel linux linux-firmware neovim sudo man-db man-pages texinfo pavucontrol networkmanager 
+pacstrap /mnt base base-devel linux linux-firmware neovim sudo man-db man-pages texinfo networkmanager 
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt pacman -Syu grub --noconfirm
-printf "enter device to install bootloader to: "
-read boot
-arch-chroot /mnt grub-install --force /dev/$boot
+lsblk
+echo "enter device to install bootloader to: "
+read bootloader
+arch-chroot /mnt grub-install --force /dev/$bootloader
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 arch-chroot /mnt systemctl enable NetworkManager
 arch-chroot /mnt timedatectl set-local-rtc 0
 arch-chroot /mnt timedatectl set-timezone Asia/Kolkata
 arch-chroot /mnt timedatectl set-ntp true
 arch-chroot /mnt hwclock --systohc
-arch-chroot /mnt echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen
-arch-chroot /mnt echo "en_IN UTF-8" >> /etc/locale.gen
-arch-chroot /mnt echo "en_US.UTF-8 UTF-8" >> /etc/locale-gen
+echo "en_GB.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+echo "en_IN UTF-8" >> /mnt/etc/locale.gen
+echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale-gen
 arch-chroot /mnt locale-gen
-#arch-chroot /mnt localectl set-locale LANG=en_GB.UTF-8
-#arch-chroot /mnt localectl set-locale LC_TIME=en_IN.UTF-8
-#arch-chroot /mnt localectl set-locale LC_MEASUREMENT=en_IN.UTF-8
-#arch-chroot /mnt localectl set-locale LC_TELEPHONE=en_IN.UTF-8
-#arch-chroot /mnt localectl set-locale LC_MONETARY=en_IN.UTF-8
-#arch-chroot /mnt localectl set-locale LC_NUMERIC=en_IN.UTF-8
+arch-chroot /mnt localectl set-locale LANG=en_GB.UTF-8
+arch-chroot /mnt localectl set-locale LC_TIME=en_IN.UTF-8
+arch-chroot /mnt localectl set-locale LC_MEASUREMENT=en_IN.UTF-8
+arch-chroot /mnt localectl set-locale LC_TELEPHONE=en_IN.UTF-8
+arch-chroot /mnt localectl set-locale LC_MONETARY=en_IN.UTF-8
+arch-chroot /mnt localectl set-locale LC_NUMERIC=en_IN.UTF-8
 arch-chroot /mnt localectl set-x11-keymap us
 
-printf "Set hostname of machine: "
+echo "Set hostname of machine: "
 read hostname
 arch-chroot /mnt hostnamectl set-hostname $hostname
 
-arch-chroot /mnt echo "127.0.0.1       localhost" >> /etc/hosts
-arch-chroot /mnt echo "::1             localhost" >> /etc/hosts
-arch-chroot /mnt echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
+echo "127.0.0.1       localhost" >> /mnt/etc/hosts
+echo "::1             localhost" >> /mnt/etc/hosts
+echo "127.0.1.1       $hostname.localdomain $hostname" >> /mnt/etc/hosts
 
-print "Set root password"
+echo "Set root password"
 arch-chroot /mnt passwd
 
-printf "username: "
+echo "username: "
 read username
 arch-chroot /mnt useradd -m -G wheel $username
 arch-chroot /mnt passwd $username
@@ -52,4 +61,3 @@ arch-chroot /mnt env EDITOR=nvim visudo		#Uncomment line about sudo access with 
 
 umount -R /mnt
 reboot
-
