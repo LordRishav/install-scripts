@@ -9,6 +9,6 @@ Now installing Arch doesn't exactly make you a pro, these scripts are an attempt
 # Remember: manual steps >> scripts in terms of security usability etc.
 
 
-## Give me feedback at @anonymous-arch-lover:matrix.org at Matrix
+## Give me feedback at [@anonymous-arch-lover:matrix.org at Matrix](https://app.element.io/#/user/@anonymous-arch-lover:matrix.org)
 
 You may want to collect some logs or at least tell me the error message when you contact me on matrix.
