@@ -40,7 +40,7 @@ arch-chroot /mnt localectl set-locale LC_MEASUREMENT=en_IN.UTF-8
 arch-chroot /mnt localectl set-locale LC_TELEPHONE=en_IN.UTF-8
 arch-chroot /mnt localectl set-locale LC_MONETARY=en_IN.UTF-8
 arch-chroot /mnt localectl set-locale LC_NUMERIC=en_IN.UTF-8
-arch-chroot /mnt localectl set-x11-keymap us
+arch-chroot /mnt localectl --no-convert set-x11-keymap us
 
 echo "Set hostname of machine: "
 read hostname
