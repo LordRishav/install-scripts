@@ -16,25 +16,25 @@
 
 git clone https://github.com/kibybyte/sway
 cd sway
-rm -rf $(pwd)/LICENSE
+rm -rf ./LICENSE
 
-for file in $(pwd)/*
+for file in ./*
 do
-    location=$(cat $file | head -2 | tail -1 | awk '{printf $2}')
+    location=$(cat "$file" | head -2 | tail -1 | awk '{printf $2}')
     location="$(eval "echo $location")"
     if [ ! -d "${location%/*}" ]
     then
         mkdir -p "${location%/*}"
     fi
-    cat $file > $location
+    cat "$file" > "$location"
 done
 
 
-sudo pacman -S sway waybar wl-clipboard xfce4-terminal grim slurp neovim otf-font-awesome pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc chromium dunst light --noconfirm
+sudo pacman -S sway waybar wl-clipboard xfce4-terminal grim slurp neovim otf-font-awesome pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light --noconfirm
 
 git clone https://aur.archlinux.org/paru-bin.git
 cd paru-bin && makepkg -si
 
-paru -S ttf-ms-fonts adwaita-qt clipman --noconfirm
+#paru -S ttf-ms-fonts adwaita-qt clipman --noconfirm
 
 chsh -s /usr/bin/fish
