@@ -12,7 +12,9 @@ pacstrap /mnt base base-devel linux linux-firmware neovim sudo man-db man-pages 
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt pacman -Syu grub 
-arch-chroot /mnt grub-install --force /dev/sda
+printf "enter device to install bootloader to: "
+read boot
+arch-chroot /mnt grub-install --force /dev/$boot
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 arch-chroot /mnt systemctl enable NetworkManager
 arch-chroot /mnt timedatectl set-local-rtc 0
