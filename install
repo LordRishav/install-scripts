@@ -7,7 +7,8 @@
 #Arch Linux for a UEFI install.
 
 cfdisk
-echo "Press Ctrl+D to skip mountpoint. Order is root, then boot, then home. Partition names to be selected only. eg: choose sda1 instead of /dev/sda1"
+echo "Press Ctrl+D to skip mountpoint. Order is root, then boot, then home."
+echo "Partition names to be selected only. eg: choose sda1 instead of /dev/sda1"
 lsblk
 echo "select root partition: "
 read root && mkfs.ext4 /dev/"$root" && mount /dev/"$root" /mnt
@@ -35,7 +36,7 @@ echo "en_GB.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo "en_IN UTF-8" >> /mnt/etc/locale.gen
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
-<<<<<<< HEAD
+
 
 echo "LANG=en_GB.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_TIME=en_IN.UTF-8" >> /mnt/etc/locale.conf
@@ -43,15 +44,6 @@ echo "LC_MEASUREMENT=en_IN.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_TELEPHONE=en_IN.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_MONETARY=en_IN.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_NUMERIC=en_IN.UTF-8" >> /mnt/etc/locale.conf
-=======
-arch-chroot /mnt localectl set-locale LANG=en_GB.UTF-8
-arch-chroot /mnt localectl set-locale LC_TIME=en_IN.UTF-8
-arch-chroot /mnt localectl set-locale LC_MEASUREMENT=en_IN.UTF-8
-arch-chroot /mnt localectl set-locale LC_TELEPHONE=en_IN.UTF-8
-arch-chroot /mnt localectl set-locale LC_MONETARY=en_IN.UTF-8
-arch-chroot /mnt localectl set-locale LC_NUMERIC=en_IN.UTF-8
-#arch-chroot /mnt localectl --no-convert set-x11-keymap us
->>>>>>> f116d81f89bb214bae1af3889fbe6ce3c0037bd6
 
 echo "Set hostname of machine: "
 read hostname
