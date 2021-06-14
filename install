@@ -6,14 +6,15 @@
 #you want, however it would make more sense to use the official installer that is packaged with
 #Arch Linux for a UEFI install.
 
+cfdisk
 echo "Press Ctrl+D to skip mountpoint. Order is root, then boot, then home. Partition names to be selected only. eg: choose sda1 instead of /dev/sda1"
 lsblk
 echo "select root partition: "
-read root && mount /dev/$root /mnt
+read root && mkfs.ext4 /dev/"$root" && mount /dev/"$root" /mnt
 echo "select boot partition: "
-read boot && mount /dev/$boot /mnt/boot
+read boot && mkfs.ext4 /dev/"$boot" && mkdir /mnt/boot && mount /dev/"$boot" /mnt/boot
 echo "select home partition: "
-read home && mount /dev/$home /mnt/home
+read home && mkfs.ext4 /dev/"$home" && mkdir /mnt/home && mount /dev/"$home" /mnt/home
 
 reflector --download-timeout 1 --protocol https --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
 pacstrap /mnt base base-devel linux linux-firmware neovim sudo man-db man-pages texinfo networkmanager 
@@ -23,7 +24,7 @@ arch-chroot /mnt pacman -Syu grub --noconfirm
 lsblk
 echo "enter device to install bootloader to: "
 read bootloader
-arch-chroot /mnt grub-install --force /dev/$bootloader
+arch-chroot /mnt grub-install --force /dev/"$bootloader"
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 arch-chroot /mnt systemctl enable NetworkManager
 arch-chroot /mnt timedatectl set-local-rtc 0
@@ -32,8 +33,9 @@ arch-chroot /mnt timedatectl set-ntp true
 arch-chroot /mnt hwclock --systohc
 echo "en_GB.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo "en_IN UTF-8" >> /mnt/etc/locale.gen
-echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale-gen
+echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
+<<<<<<< HEAD
 
 echo "LANG=en_GB.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_TIME=en_IN.UTF-8" >> /mnt/etc/locale.conf
@@ -41,10 +43,19 @@ echo "LC_MEASUREMENT=en_IN.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_TELEPHONE=en_IN.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_MONETARY=en_IN.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_NUMERIC=en_IN.UTF-8" >> /mnt/etc/locale.conf
+=======
+arch-chroot /mnt localectl set-locale LANG=en_GB.UTF-8
+arch-chroot /mnt localectl set-locale LC_TIME=en_IN.UTF-8
+arch-chroot /mnt localectl set-locale LC_MEASUREMENT=en_IN.UTF-8
+arch-chroot /mnt localectl set-locale LC_TELEPHONE=en_IN.UTF-8
+arch-chroot /mnt localectl set-locale LC_MONETARY=en_IN.UTF-8
+arch-chroot /mnt localectl set-locale LC_NUMERIC=en_IN.UTF-8
+#arch-chroot /mnt localectl --no-convert set-x11-keymap us
+>>>>>>> f116d81f89bb214bae1af3889fbe6ce3c0037bd6
 
 echo "Set hostname of machine: "
 read hostname
-arch-chroot /mnt hostnamectl set-hostname $hostname
+echo "$hostname" > /mnt/etc/hostname
 
 echo "127.0.0.1       localhost" >> /mnt/etc/hosts
 echo "::1             localhost" >> /mnt/etc/hosts
