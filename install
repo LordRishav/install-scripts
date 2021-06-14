@@ -34,13 +34,13 @@ echo "en_GB.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo "en_IN UTF-8" >> /mnt/etc/locale.gen
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale-gen
 arch-chroot /mnt locale-gen
-arch-chroot /mnt localectl set-locale LANG=en_GB.UTF-8
-arch-chroot /mnt localectl set-locale LC_TIME=en_IN.UTF-8
-arch-chroot /mnt localectl set-locale LC_MEASUREMENT=en_IN.UTF-8
-arch-chroot /mnt localectl set-locale LC_TELEPHONE=en_IN.UTF-8
-arch-chroot /mnt localectl set-locale LC_MONETARY=en_IN.UTF-8
-arch-chroot /mnt localectl set-locale LC_NUMERIC=en_IN.UTF-8
-arch-chroot /mnt localectl set-x11-keymap us
+
+echo "LANG=en_GB.UTF-8" >> /mnt/etc/locale.conf
+echo "LC_TIME=en_IN.UTF-8" >> /mnt/etc/locale.conf
+echo "LC_MEASUREMENT=en_IN.UTF-8" >> /mnt/etc/locale.conf
+echo "LC_TELEPHONE=en_IN.UTF-8" >> /mnt/etc/locale.conf
+echo "LC_MONETARY=en_IN.UTF-8" >> /mnt/etc/locale.conf
+echo "LC_NUMERIC=en_IN.UTF-8" >> /mnt/etc/locale.conf
 
 echo "Set hostname of machine: "
 read hostname
