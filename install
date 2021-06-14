@@ -1,0 +1,48 @@
+#!/bin/sh
+
+#First and foremost you have to manually make paritions with cfdisk and mount them. This script 
+#is meant to be mountpoint independent. However it assumes 2 partitions: / and /home. It is also
+#assumed that you have mounted your respective partitions in /mnt and so forth. Edit it as you
+#see fit. Further it is to be noted that this script assumes a BIOS installation. Edit it if you
+#you want, however it would make more sense to use the official installer that is packaged with
+#Arch Linux for a UEFI install.
+
+reflector --download-timeout 1 --protocol https --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
+pacstrap /mnt base base-devel linux linux-firmware neovim sudo man-db man-pages texinfo pavucontrol networkmanager 
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+
+arch-chroot /mnt pacman -Syu grub 
+arch-chroot /mnt grub-install --force /dev/sda
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+arch-chroot /mnt systemctl enable NetworkManager
+arch-chroot /mnt timedatectl set-local-rtc 0
+arch-chroot /mnt timedatectl set-timezone Asia/Kolkata
+arch-chroot /mnt timedatectl set-ntp true
+arch-chroot /mnt hwclock --systohc
+arch-chroot /mnt echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen
+arch-chroot /mnt echo "en_IN UTF-8" >> /etc/locale.gen
+arch-chroot /mnt echo "en_US.UTF-8 UTF-8" >> /etc/locale-gen
+arch-chroot /mnt locale-gen
+arch-chroot /mnt localectl set-locale LANG=en_GB.UTF-8
+arch-chroot /mnt localectl set-locale LC_TIME=en_IN.UTF-8
+arch-chroot /mnt localectl set-x11-keymap us
+
+printf "Set hostname of machine: "
+read hostname
+arch-chroot /mnt hostnamectl set-hostname $hostname
+
+arch-chroot /mnt echo "127.0.0.1       localhost" >> /etc/hosts
+arch-chroot /mnt echo "::1             localhost" >> /etc/hosts
+arch-chroot /mnt echo "127.0.1.1       '$hostname'.localdomain $hostname" >> /etc/hosts
+
+arch-chroot /mnt passwd
+
+printf "username: "
+read username
+arch-chroot /mnt useradd -m -g wheel $username
+arch-chroot /mnt passwd $username
+arch-chroot /mnt visudo		#Uncomment line about sudo access with visudo as well as entry without password
+
+reboot
+
