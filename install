@@ -12,17 +12,21 @@ echo "Partition names to be selected only. eg: choose sda1 instead of /dev/sda1"
 lsblk
 echo "select root partition: "
 read root && mkfs.ext4 /dev/"$root" && mount /dev/"$root" /mnt
+lsblk
 echo "select boot partition: "
 read boot && mkfs.ext4 /dev/"$boot" && mkdir /mnt/boot && mount /dev/"$boot" /mnt/boot
+lsblk
 echo "select home partition: "
 read home && mkfs.ext4 /dev/"$home" && mkdir /mnt/home && mount /dev/"$home" /mnt/home
 
-reflector --download-timeout 1 --protocol https --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
+reflector --download-timeout 1 --protocol https --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 pacstrap /mnt base base-devel linux linux-firmware neovim sudo man-db man-pages texinfo networkmanager 
 genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt pacman -Syu grub --noconfirm
 lsblk
+echo "Bootloader to be installed in whole disk instead of partition."
+echo "eg: sda is valid. sda1 is not valid"
 echo "enter device to install bootloader to: "
 read bootloader
 arch-chroot /mnt grub-install --force /dev/"$bootloader"
