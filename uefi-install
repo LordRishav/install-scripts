@@ -41,7 +41,7 @@ echo "default arch.conf
 timeout 2
 editor no" > /mnt/boot/loader/loader.conf
 
-uuid="$(blkid $root -s UUID -o value)"
+uuid="$(blkid /dev/$root -s UUID -o value)"
 echo "title   Arch Linux (linux)
 linux   /vmlinuz-linux
 initrd  /$cpu-ucode.img
