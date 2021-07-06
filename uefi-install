@@ -22,7 +22,7 @@ read root && mkfs.ext4 /dev/$root && mount /dev/$root /mnt
 clear
 lsblk
 echo "select boot partition: "
-read boot && mkfs.vfat -F 32 /dev/$boot && mkdir /mnt/boot && mount /dev/$boot /mnt/boot
+read boot && mkfs.fat -F32 /dev/$boot && mkdir /mnt/boot && mount /dev/$boot /mnt/boot
 clear
 lsblk
 echo "select home partition: "
