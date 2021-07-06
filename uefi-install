@@ -29,7 +29,7 @@ echo "select home partition: "
 read home && mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
 
 reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel linux linux-firmware neovim sudo man-db man-pages texinfo networkmanager $cpu-ucode
+pacstrap /mnt base base-devel git linux linux-firmware neovim nano sudo man-db man-pages texinfo networkmanager $cpu-ucode
 genfstab -U /mnt >> /mnt/etc/fstab
 
 mkdir -p /mnt/boot/loader/entries
@@ -79,7 +79,6 @@ echo "username: "
 read username
 arch-chroot /mnt useradd -m -G wheel $username
 arch-chroot /mnt passwd $username
-arch-chroot /mnt EDITOR=nano visudo		#Uncomment line about sudo access with visudo as well as entry without password
 
 umount -R /mnt
 reboot
