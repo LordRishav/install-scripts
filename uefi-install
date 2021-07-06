@@ -1,8 +1,6 @@
 #!/bin/env bash
 
-echo "It is assumed that this installation is to be done on Intel hardware. Hence 'intel-ucode'
-will be installed and 'intel-ucode.img' will be added to systemd-boot entries. Edit as you see
-fit. Further the scheme followed is GPT/UEFI."
+echo "This is the UEFI minimal install."
 
 if lscpu | grep GenuineIntel 1>/dev/null 2>&1 ; then
 	cpu="intel"
@@ -12,28 +10,28 @@ fi
 
 
 lsblk
-echo "select disk(/dev/sda, not /dev/sda1): "
+echo "select disk(eg: sda, not sda1): "
 read disk
-cgdisk $disk
+cgdisk /dev/$disk
 
 echo "Press Ctrl+D to skip mountpoint. Order is root, then boot, then home."
 echo "Partition names to be selected only. eg: choose sda1 instead of /dev/sda1"
 lsblk
 echo "select root partition: "
-read root && mkfs.ext4 /dev/"$root" && mount /dev/"$root" /mnt
+read root && mkfs.ext4 /dev/$root && mount /dev/$root /mnt
 clear
 lsblk
 echo "select boot partition: "
-read boot && mkfs.vfat -F 32 /dev/"$boot" && mkdir /mnt/boot && mount /dev/"$boot" /mnt/boot
+read boot && mkfs.vfat -F 32 /dev/$boot && mkdir /mnt/boot && mount /dev/$boot /mnt/boot
 clear
 lsblk
 echo "select home partition: "
-read home && mkfs.ext4 /dev/"$home" && mkdir /mnt/home && mount /dev/"$home" /mnt/home
+read home && mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
 
 reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
 echo "type editor: "
 read $editor
-pacstrap /mnt base base-devel linux linux-firmware "$editor" sudo man-db man-pages texinfo networkmanager $cpu-ucode
+pacstrap /mnt base base-devel linux linux-firmware $editor sudo man-db man-pages texinfo networkmanager $cpu-ucode
 genfstab -U /mnt >> /mnt/etc/fstab
 
 mkdir -p /mnt/boot/loader/entries
