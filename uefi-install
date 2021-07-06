@@ -79,7 +79,7 @@ echo "username: "
 read username
 arch-chroot /mnt useradd -m -G wheel $username
 arch-chroot /mnt passwd $username
-arch-chroot /mnt env EDITOR=nvim visudo		#Uncomment line about sudo access with visudo as well as entry without password
+arch-chroot /mnt EDITOR=nano visudo		#Uncomment line about sudo access with visudo as well as entry without password
 
 umount -R /mnt
 reboot
