@@ -29,9 +29,7 @@ echo "select home partition: "
 read home && mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
 
 reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
-echo "type editor: "
-read $editor
-pacstrap /mnt base base-devel linux linux-firmware $editor sudo man-db man-pages texinfo networkmanager $cpu-ucode
+pacstrap /mnt base base-devel linux linux-firmware neovim sudo man-db man-pages texinfo networkmanager $cpu-ucode
 genfstab -U /mnt >> /mnt/etc/fstab
 
 mkdir -p /mnt/boot/loader/entries
