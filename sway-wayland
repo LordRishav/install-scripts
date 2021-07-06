@@ -33,7 +33,7 @@ sudo pacman -S sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mup
 
 paru --version || git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric
 
-paru -S ttf-ms-fonts adwaita-qt clipman --noconfirm
+paru -S ttf-ms-fonts adwaita-qt clipman motivate
 
 chsh -s /usr/bin/fish
 echo "Change /bin/sh to dash?(y/n) "

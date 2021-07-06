@@ -36,7 +36,7 @@ mkdir -p /mnt/boot/loader/entries
 
 arch-chroot /mnt bootctl install
 echo "default arch.conf
-timeout 2
+timeout 0
 editor no" > /mnt/boot/loader/loader.conf
 
 uuid="$(blkid /dev/$root -s UUID -o value)"
