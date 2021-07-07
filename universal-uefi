@@ -47,23 +47,34 @@ initrd  /initramfs-linux.img
 options	 root=UUID=$uuid rw" > /mnt/boot/loader/entries/arch.conf
 
 arch-chroot /mnt systemctl enable NetworkManager
-arch-chroot /mnt timedatectl set-local-rtc 0
+timedatectl set-local-rtc 0
 timezone=$(tzselect | tail -n 1)
 ln -sf /usr/share/zoneinfo/"$timezone" /etc/localtime
-arch-chroot /mnt timedatectl set-ntp true
+timedatectl set-ntp true
 arch-chroot /mnt hwclock --systohc
 echo "en_GB.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo "en_IN UTF-8" >> /mnt/etc/locale.gen
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
 
-
-echo "LANG=en_GB.UTF-8" >> /mnt/etc/locale.conf
-echo "LC_TIME=en_IN.UTF-8" >> /mnt/etc/locale.conf
-echo "LC_MEASUREMENT=en_IN.UTF-8" >> /mnt/etc/locale.conf
-echo "LC_TELEPHONE=en_IN.UTF-8" >> /mnt/etc/locale.conf
-echo "LC_MONETARY=en_IN.UTF-8" >> /mnt/etc/locale.conf
-echo "LC_NUMERIC=en_IN.UTF-8" >> /mnt/etc/locale.conf
+echo "Use Default India setup for locales?(y/n)"
+read locale-setup
+if [ "$locale-setup" = "y" ] ; then
+	echo "LANG=en_GB.UTF-8" >> /mnt/etc/locale.conf
+	echo "LC_TIME=en_IN.UTF-8" >> /mnt/etc/locale.conf
+	echo "LC_MEASUREMENT=en_IN.UTF-8" >> /mnt/etc/locale.conf
+	echo "LC_TELEPHONE=en_IN.UTF-8" >> /mnt/etc/locale.conf
+	echo "LC_MONETARY=en_IN.UTF-8" >> /mnt/etc/locale.conf
+	echo "LC_NUMERIC=en_IN.UTF-8" >> /mnt/etc/locale.conf
+elif [ "$locale-setup" = "n" ] ; then
+	echo "System Language (follow format followed in Arch Wiki)"
+	read lang
+	echo "LANG=$lang" >> /mnt/etc/locale.conf
+	echo "Local Time Format(follow format followed in Arch Wiki)"
+	read time
+	echo "LC_TIME=$time" >> /mnt/etc/locale.conf
+	echo "You can set other stuff like telephone, money, numeric formats later on if you want." && sleep 10
+fi
 
 echo "Set hostname of machine: "
 read hostname
