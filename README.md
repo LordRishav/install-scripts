@@ -11,7 +11,9 @@ Now, installing Arch doesn't exactly make you a pro, these scripts are an attemp
 ## To do
 
 -[ ] Add options for locales
+
 -[ ] Add options for languages
+
 -[ ] Add options for countries in reflector
 
 
