@@ -8,6 +8,12 @@ Now, installing Arch doesn't exactly make you a pro, these scripts are an attemp
 
 # Remember: manual steps >> scripts in terms of security usability etc.
 
+## To do
+
+-[] Add options for locales
+-[] Add options for languages
+-[] Add options for countries in reflector
+
 
 ## Give me feedback in [Matrix](https://matrix.to/#/@kibybyte:fairydust.space)
 
