@@ -28,11 +28,11 @@ do
 done
 
 
-sudo pacman -S sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mupdf lxterminal grim slurp neovim otf-font-awesome pipewire pipewire-pulse pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light 
+sudo pacman -S sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mupdf lxterminal grim slurp neovim otf-font-awesome pipewire pipewire-pulse pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light lxsession gammastep
 
 paru --version || git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric
 
-paru -S ttf-ms-fonts adwaita-qt clipman motivate
+paru -S ttf-ms-fonts adwaita-qt clipman motivate 
 
 chsh -s /usr/bin/fish
 echo "Change /bin/sh to dash?(y/n) "
