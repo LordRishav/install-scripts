@@ -10,9 +10,19 @@ Now, installing Arch doesn't exactly make you a pro, these scripts are an attemp
 
 ## To do
 
+1. uefi-install -
+
 - [ ] Add options for locales
 - [ ] Add options for languages
 - [ ] Add options for countries in reflector
+
+2. sway-wayland
+
+- [ ] Ask for browser
+- [ ] set browser selected as $BROWSER
+- [ ] ask preferred terminal name and install it. Set `$term terminal name` in sway config
+- [ ] Ask for preferred shell. If blank continue with rest of script
+- [ ] Ask for pulseaudio/pipewire
 
 
 ## Give me feedback in [Matrix](https://matrix.to/#/@kibybyte:fairydust.space)
