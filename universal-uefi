@@ -14,19 +14,19 @@ echo "select disk(eg: sda, not sda1): "
 read disk
 cgdisk /dev/$disk
 
-echo "Press Ctrl+D to skip mountpoint. Order is root, then boot, then home."
+clear
+echo "Press Ctrl+D to skip mountpoint. Order of selection is root, then boot, then home."
 echo "Partition names to be selected only. eg: choose sda1 instead of /dev/sda1"
 lsblk
 echo "select root partition: "
 read root && mkfs.ext4 /dev/$root && mount /dev/$root /mnt
-clear
 lsblk
 echo "select boot partition: "
 read boot && mkfs.fat -F32 /dev/$boot && mkdir /mnt/boot && mount /dev/$boot /mnt/boot
-clear
 lsblk
 echo "select home partition: "
 read home && mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
+clear
 
 reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
 pacstrap /mnt base base-devel git linux linux-firmware neovim nano sudo man-db man-pages texinfo networkmanager $cpu-ucode
@@ -49,7 +49,7 @@ options	 root=UUID=$uuid rw" > /mnt/boot/loader/entries/arch.conf
 arch-chroot /mnt systemctl enable NetworkManager
 timedatectl set-local-rtc 0
 timezone=$(tzselect | tail -n 1)
-ln -sf /usr/share/zoneinfo/"$timezone" /etc/localtime
+arch-chroot /mnt ln -sf /usr/share/zoneinfo/"$timezone" /etc/localtime
 timedatectl set-ntp true
 arch-chroot /mnt hwclock --systohc
 echo "en_GB.UTF-8 UTF-8" >> /mnt/etc/locale.gen

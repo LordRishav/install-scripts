@@ -1,6 +1,7 @@
 #!/bin/env bash
 
-echo "This is the UEFI minimal install."
+echo "This is the UEFI minimal install. It installs a configuration tailored to my needs.
+You might be looking for universal-uefi from this same repo for something a little more universal."
 
 if lscpu | grep GenuineIntel 1>/dev/null 2>&1 ; then
 	cpu="intel"
@@ -14,19 +15,19 @@ echo "select disk(eg: sda, not sda1): "
 read disk
 cgdisk /dev/$disk
 
+clear
 echo "Press Ctrl+D to skip mountpoint. Order is root, then boot, then home."
 echo "Partition names to be selected only. eg: choose sda1 instead of /dev/sda1"
 lsblk
 echo "select root partition: "
-read root && mkfs.ext4 /dev/$root && mount /dev/$root /mnt
-clear
+read root && mkfs.ext4 /dev/$root && mount /dev/$root /mnt || exit
 lsblk
 echo "select boot partition: "
-read boot && mkfs.fat -F32 /dev/$boot && mkdir /mnt/boot && mount /dev/$boot /mnt/boot
-clear
+read boot && mkfs.fat -F32 /dev/$boot && mkdir /mnt/boot && mount /dev/$boot /mnt/boot || exit
 lsblk
 echo "select home partition: "
 read home && mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
+clear
 
 reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
 pacstrap /mnt base base-devel git linux linux-firmware neovim nano sudo man-db man-pages texinfo networkmanager $cpu-ucode
@@ -47,9 +48,10 @@ initrd  /initramfs-linux.img
 options	 root=UUID=$uuid rw" > /mnt/boot/loader/entries/arch.conf
 
 arch-chroot /mnt systemctl enable NetworkManager
-arch-chroot /mnt timedatectl set-local-rtc 0
+timedatectl set-local-rtc 0
 arch-chroot /mnt timedatectl set-timezone Asia/Kolkata
-arch-chroot /mnt timedatectl set-ntp true
+arch-chroot /mnt ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+timedatectl set-ntp true
 arch-chroot /mnt hwclock --systohc
 echo "en_GB.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo "en_IN UTF-8" >> /mnt/etc/locale.gen
@@ -63,6 +65,8 @@ echo "LC_MEASUREMENT=en_IN.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_TELEPHONE=en_IN.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_MONETARY=en_IN.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_NUMERIC=en_IN.UTF-8" >> /mnt/etc/locale.conf
+
+clear
 
 echo "Set hostname of machine: "
 read hostname
