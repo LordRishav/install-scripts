@@ -2,17 +2,16 @@
 #This install script installs sway WM and related tools. It uses the Wayland protocol.
 
 
-#Dependencies: git, pacman, a vanilla install of Arch Linux with the base-devel package 
-#Packages which will be installed: sway waybar wl-clipboard xfce4-terminal grim slurp neovim otf-font-awesome pulseaudio pulseaudio-alsa pulse
-#				   audio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc 
-#				   chromium dunst light ttf-ms-fonts adwaita-qt clipman
-#                                  
-#                                  
-#                                  
-#                                  
-#
-#You will also need my scripts as well. Remember to add ~/.local/bin to $PATH.
+echo "Dependencies: git, pacman, a vanilla install of Arch Linux with the base-devel package "
 
+echo "Packages which will be installed: sway waybar wl-clipboard lxterminal grim slurp 
+neovim otf-font-awesome pipewire pipewire-alsa pipewire-pulse 
+bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet 
+ranger mate-calc chromium dunst light ttf-ms-fonts adwaita-qt clipman"
+
+echo "Continue? (y/n)"
+read response
+[ $response = "y" ] || exit
 
 git clone https://github.com/kibybyte/sway || exit
 cd sway || exit 
