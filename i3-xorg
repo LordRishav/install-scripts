@@ -44,9 +44,15 @@ echo "It will take quite some time to compile the following AUR packages, so gra
 
 paru -S ttf-ms-fonts adwaita-qt clipman motivate 
 
+clear
 chsh -s /usr/bin/fish
 echo "Change /bin/sh to dash?(y/n) "
 echo "select n if you want to be safe and are new to linux"
 read choice
 [ "$choice" = "y" ] && sudo ln -sf /usr/bin/dash /bin/sh
 sudo usermod -aG video $USER
+
+clear
+mkdir -p $HOME/pics
+cd $HOME/pics
+git clone https://github.com/kibybyte/wallpapers
