@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#This install script installs sway WM and related tools. It uses the Wayland protocol.
+echo "This install script installs sway WM and related tools. It uses the Wayland protocol."
 
 
 echo "Dependencies: git, pacman, a vanilla install of Arch Linux with the base-devel package "
@@ -28,7 +28,7 @@ do
 done
 
 
-sudo pacman -S sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mupdf lxterminal grim slurp neovim otf-font-awesome pipewire pipewire-pulse pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light lxsession gammastep
+sudo pacman -S sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mupdf alacritty grim slurp neovim otf-font-awesome pipewire pipewire-pulse pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light lxsession gammastep firefox
 
 paru --version || git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric
 
