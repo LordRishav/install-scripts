@@ -9,7 +9,8 @@ echo "Packages which will be installed: xorg-xserver, i3-gaps, i3blocks, paru-bi
                                   pulseaudio-alsa, pulseaudio-bluetooth, bluez, bluez-utils,
                                   fish (will be set to be default shell), ttf-jetbrains-mono,
                                   pango, nm-applet,  dmenu, ranger, mate-calc, firefox, 
-                                  clipmenu, dunst, redshift, feh, light, motivate, alacritty 
+                                  clipmenu, dunst, redshift, feh, light, motivate, alacritty,
+				  xwallpaper, xclip
 				  "
 echo "This will install my scripts as well.
 "
@@ -19,10 +20,13 @@ printf "continue?(y/n): " ; read -r response
 [ "$response" != "y" ] && exit
 
 clear
-echo "Copying my config files...\n"
+echo "Copying my config files..."
+cd /tmp
 git clone https://github.com/kibybyte/i3-xorg
 cd i3-xorg
 rm -rf ./LICENSE
+mkdir -p $HOME/.local
+mv ./bin $HOME/.local
 
 for file in ./*
 do
@@ -37,7 +41,7 @@ done
 
 clear
 echo "installing packages" && sleep 5
-sudo pacman -Syu xorg-server i3-gaps i3blocks maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc firefox dunst redshift feh light xorg-xinit alacritty
+sudo pacman -Syu xorg-server xwallpaper i3-gaps i3blocks maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc firefox dunst redshift feh light xorg-xinit alacritty xclip
 
 paru --version || { git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric; }
 
