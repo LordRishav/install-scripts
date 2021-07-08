@@ -1,22 +1,28 @@
 #!/bin/sh
-#This install script installs i3 WM and related tools. It uses the Xorg protocol.
+echo "This install script installs i3 WM and related tools. It uses the Xorg protocol."
+echo "Dependencies: git, pacman, a vanilla install of Arch Linux with the base-devel package"
 
+echo "
 
-#Dependencies: git, pacman, a vanilla install of Arch Linux with the base-devel package 
-#Packages which will be installed: xorg-xserver, i3-gaps, i3blocks, paru-bin, maim, pulseaudio,
-#                                  pulseaudio-alsa, pulseaudio-bluetooth, bluez, bluez-utils,
-#                                  fish (will be set to be default shell), ttf-jetbrains-mono,
-#                                  pango, nm-applet, st, dmenu, ranger, mate-calc, chromium, 
-#                                  clipmenu, dunst, redshift, feh, light
-#
-#You will also need my scripts as well. Remember to add ~/.local/bin to $PATH.
+	"
+echo "Packages which will be installed: xorg-xserver, i3-gaps, i3blocks, paru-bin, maim, pulseaudio,
+                                  pulseaudio-alsa, pulseaudio-bluetooth, bluez, bluez-utils,
+                                  fish (will be set to be default shell), ttf-jetbrains-mono,
+                                  pango, nm-applet,  dmenu, ranger, mate-calc, firefox, 
+                                  clipmenu, dunst, redshift, feh, light, motivate, alacritty \n
+				  \n "
+echo "This will install my scripts as well.\n"
 
+printf "continue?(y/n): " ; read -r response
+[ "$response" != "y" ] && exit
 
+clear
+echo "Copying my config files...\n"
 git clone https://github.com/kibybyte/i3-xorg
 cd i3-xorg
-rm -rf $(pwd)/LICENSE
+rm -rf ./LICENSE
 
-for file in $(pwd)/*
+for file in ./*
 do
     location=$(cat $file | head -2 | tail -1 | awk '{printf $2}')
     location="$(eval "echo $location")"
@@ -27,10 +33,11 @@ do
     cat $file > $location
 done
 
-
-sudo pacman -S xorg-server i3-gaps i3blocks maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc chromium dunst redshift feh light xorg-xinit --noconfirm
+clear
+echo "installing packages" && sleep 5
+sudo pacman -S xorg-server i3-gaps i3blocks maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc firefox dunst redshift feh light xorg-xinit alacritty
 
 git clone https://aur.archlinux.org/paru-bin.git
 cd paru-bin && makepkg -sric
 
-paru -S clipmenu --noconfirm
+paru -S clipmenu motivate
