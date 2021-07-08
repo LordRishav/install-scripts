@@ -9,9 +9,11 @@ echo "Packages which will be installed: xorg-xserver, i3-gaps, i3blocks, paru-bi
                                   pulseaudio-alsa, pulseaudio-bluetooth, bluez, bluez-utils,
                                   fish (will be set to be default shell), ttf-jetbrains-mono,
                                   pango, nm-applet,  dmenu, ranger, mate-calc, firefox, 
-                                  clipmenu, dunst, redshift, feh, light, motivate, alacritty \n
-				  \n "
-echo "This will install my scripts as well.\n"
+                                  clipmenu, dunst, redshift, feh, light, motivate, alacritty 
+				  "
+echo "This will install my scripts as well.
+"
+
 
 printf "continue?(y/n): " ; read -r response
 [ "$response" != "y" ] && exit
@@ -37,7 +39,7 @@ clear
 echo "installing packages" && sleep 5
 sudo pacman -Syu xorg-server i3-gaps i3blocks maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc firefox dunst redshift feh light xorg-xinit alacritty
 
-paru --version || { git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric }
+paru --version || { git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric; }
 
 clear
 echo "It will take quite some time to compile the following AUR packages, so grab a cup of coffee or tea..." && sleep 5
