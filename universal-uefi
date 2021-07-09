@@ -28,7 +28,8 @@ echo "select home partition: "
 read home && mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
 clear
 
-reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
+printf "Enter country code for reflector: " ; read country
+reflector -c $country --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
 pacstrap /mnt base base-devel git linux linux-firmware neovim nano sudo man-db man-pages texinfo networkmanager $cpu-ucode
 genfstab -U /mnt >> /mnt/etc/fstab
 
