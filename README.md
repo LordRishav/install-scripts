@@ -12,8 +12,8 @@ Now, installing Arch doesn't exactly make you a pro, these scripts are an attemp
 
 1. uefi-install -
 
-- [ ] Add options for locales
-- [ ] Add options for languages
+- [X] Add options for locales
+- [X] Add options for languages
 - [ ] Add options for countries in reflector
 
 2. sway-wayland
