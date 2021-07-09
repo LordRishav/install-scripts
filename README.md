@@ -14,7 +14,7 @@ Now, installing Arch doesn't exactly make you a pro, these scripts are an attemp
 
 - [X] Add options for locales
 - [X] Add options for languages
-- [ ] Add options for countries in reflector
+- [X] Add options for countries in reflector
 
 2. sway-wayland
 
