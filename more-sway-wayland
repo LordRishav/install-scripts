@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+echo "This install script installs sway WM and related tools. It uses the Wayland protocol."
+
+
+echo "Dependencies: git, pacman, a vanilla install of Arch Linux with the base-devel package "
+
+echo "Packages which will be installed: sway waybar wl-clipboard lxterminal grim slurp 
+neovim otf-font-awesome pipewire pipewire-alsa pipewire-pulse 
+bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet 
+ranger mate-calc browser-of-choice dunst light ttf-ms-fonts adwaita-qt clipman"
+
+echo "Continue? (y/n)"
+read response
+[ $response = "y" ] || exit
+
+git clone https://github.com/kibybyte/sway || exit
+cd sway || exit 
+rm -f ./LICENSE
+mkdir -p $HOME/.local
+mv bin $HOME/.local/
+
+for file in ./*
+do
+    location="$(awk 'NR==2 { print $2 }' "$file")"
+    location="$(eval "echo $location")"
+    [ ! -d "${location%/*}" ] && mkdir -p "${location%/*}"
+    cat "$file" > "$location"
+done
+
+
+printf "select browser: " ; read browser
+sudo pacman -S sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mupdf alacritty grim slurp neovim otf-font-awesome pipewire pipewire-pulse pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light lxsession gammastep $browser
+
+paru --version || git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric
+
+paru -S ttf-ms-fonts adwaita-qt clipman motivate 
+
+chsh -s /usr/bin/fish
+echo "Change /bin/sh to dash?(y/n) "
+echo "select n if you want to be safe and are new to linux"
+read choice
+[ "$choice" = "y" ] && sudo ln -sf /usr/bin/dash /bin/sh
+sudo usermod -aG video $USER
+
+
+
+clear
+mkdir -p $HOME/pics
+cd $HOME/pics
+git clone https://github.com/kibybyte/wallpapers
