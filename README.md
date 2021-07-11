@@ -10,6 +10,9 @@ Now, installing Arch doesn't exactly make you a pro, these scripts are an attemp
 
 ## To do
 
+uefi-install/universal-uefi/bios-install
+
+- [ ] Add user to wheel group with visudo(preferably) from chroot
 
 sway-wayland
 
