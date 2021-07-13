@@ -12,7 +12,7 @@ echo "Packages which will be installed: xorg-xserver, i3-gaps, i3blocks, paru-bi
                                   clipmenu, dunst, redshift, feh, light, motivate, alacritty,
 				  xwallpaper, xclip
 				  "
-echo "This will install my scripts as well.
+echo "This will add my scripts as well.
 "
 
 
@@ -25,7 +25,7 @@ cd /tmp
 git clone https://github.com/kibybyte/i3-xorg
 cd i3-xorg
 rm -rf ./LICENSE
-read -p "Install my scripts too found at kibybyte/bin? (y/n)" binchoice
+read -p "Include my scripts found at kibybyte/bin? Not having them may break some minor stuff. (y/n)" binchoice
 if [ "$binchoice" = "y" ] ; then
 	mkdir -p $HOME/.local
 	git clone https://github.com/kibybyte/bin

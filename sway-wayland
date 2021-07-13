@@ -16,7 +16,7 @@ read response
 git clone https://github.com/kibybyte/sway || exit
 cd sway || exit 
 rm -f ./LICENSE
-read -p "Install my scripts too found at kibybyte/bin? (y/n)" binchoice
+read -p "Include my scripts found at kibybyte/bin? Not having them may break some minor stuff. (y/n)" binchoice
 if [ "$binchoice" = "y" ] ; then
 	mkdir -p $HOME/.local
 	git clone https://github.com/kibybyte/bin
