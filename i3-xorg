@@ -25,8 +25,13 @@ cd /tmp
 git clone https://github.com/kibybyte/i3-xorg
 cd i3-xorg
 rm -rf ./LICENSE
-mkdir -p $HOME/.local
-mv ./bin $HOME/.local
+read -p "Install my scripts too found at kibybyte/bin? (y/n)" binchoice
+if [ "$binchoice" = "y" ] ; then
+	mkdir -p $HOME/.local
+	git clone https://github.com/kibybyte/bin
+	rm bin/LICENSE
+	mv bin $HOME/.local/
+fi
 
 for file in ./*
 do
