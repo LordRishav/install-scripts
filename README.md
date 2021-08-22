@@ -12,7 +12,7 @@ Now, installing Arch doesn't exactly make you a pro, these scripts are an attemp
 
 uefi-install/universal-uefi/bios-install
 
-- [ ] Change permissions of wheel group
+- [X] Change permissions of wheel group
 
 sway-wayland
 

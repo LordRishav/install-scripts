@@ -81,5 +81,9 @@ arch-chroot /mnt useradd -m -G wheel $username
 sed -i '85i \%wheel ALL=(ALL) NOPASSWD: ALL' /mnt/etc/sudoers || echo "WARNING: run visudo on reboot and correct as required."
 arch-chroot /mnt passwd $username
 
+echo "EDITOR=nvim
+GTK_THEME=Adwaita:dark
+QT_STYLE_OVERRIDE=Adwaita-dark" > /mnt/etc/environment
+
 umount -R /mnt
 reboot
