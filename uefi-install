@@ -29,7 +29,7 @@ mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
 clear
 
 reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel git linux linux-firmware neovim nano sudo man-db man-pages texinfo networkmanager $cpu-ucode
+pacstrap /mnt base base-devel git linux linux-firmware neovim nano sudo man-db man-pages texinfo networkmanager $cpu-ucode dash
 genfstab -U /mnt >> /mnt/etc/fstab
 
 mkdir -p /mnt/boot/loader/entries
