@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 echo "This install script installs i3 WM and related tools. It uses the Xorg protocol."
 echo "Dependencies: git, pacman, a vanilla install of Arch Linux with the base-devel package" 
 
@@ -23,7 +24,7 @@ clear
 echo "Copying my config files..."
 cd /tmp
 git clone https://github.com/kibybyte/i3-xorg
-cd i3-xorg || exit 1
+cd i3-xorg 
 rm -rf ./LICENSE
 read -r -p "Include my scripts found at kibybyte/bin? Not having them may break some minor stuff. (y/n)" binchoice
 if [ "$binchoice" = "y" ] ; then

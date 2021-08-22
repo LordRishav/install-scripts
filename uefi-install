@@ -1,4 +1,5 @@
 #!/bin/env bash
+set -e
 
 echo "This is the UEFI minimal install. It installs a configuration tailored to my needs.
 You might be looking for universal-uefi from this same repo for something a little more universal."
@@ -19,10 +20,10 @@ echo "Press Ctrl+D to skip mountpoint. Order is root, then boot, then home."
 echo "Partition names to be selected only. eg: choose sda1 instead of /dev/sda1"
 lsblk && echo "Press Ctrl+D to skip mountpoint."
 read -p "select root partition: " root
-mkfs.ext4 /dev/$root && mount /dev/$root /mnt || exit
+mkfs.ext4 /dev/$root && mount /dev/$root /mnt 
 lsblk && echo "Press Ctrl+D to skip mountpoint."
 read -p "select boot partition: " boot
-mkfs.fat -F32 /dev/$boot && mkdir /mnt/boot && mount /dev/$boot /mnt/boot || exit
+mkfs.fat -F32 /dev/$boot && mkdir /mnt/boot && mount /dev/$boot /mnt/boot 
 lsblk && echo "Press Ctrl+D to skip mountpoint."
 read -p "select home partition: " home
 mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
