@@ -1,36 +1,36 @@
-#!/bin/sh
+#!/bin/bash
 echo "This install script installs i3 WM and related tools. It uses the Xorg protocol."
 echo "Dependencies: git, pacman, a vanilla install of Arch Linux with the base-devel package" 
 
 echo "
 
 	" && sleep 5
-echo "Packages which will be installed: xorg-xserver, i3-gaps, i3blocks, paru-bin, maim, pulseaudio,
-                                  pulseaudio-alsa, pulseaudio-bluetooth, bluez, bluez-utils,
+echo "Packages which will be installed: xorg-xserver, i3-gaps, i3blocks, paru-bin, maim, pipewire,
+                                  pipewire-alsa,pipewire-pulse, bluez, bluez-utils,
                                   fish (will be set to be default shell), ttf-jetbrains-mono,
                                   pango, nm-applet,  dmenu, ranger, mate-calc, firefox, 
-                                  clipmenu, dunst, redshift, feh, light, motivate, alacritty,
-				  xwallpaper, xclip
+                                  clipmenu, dunst, redshift, feh, light, motivate, xfce4-terminal,
+				  xwallpaper, xclip, ttf-ms-fonts, adwaita-qt
 				  "
 echo "This will add my scripts as well.
 "
 
 
-printf "continue?(y/n): " ; read -r response
-[ "$response" != "y" ] && exit
+#read -r -p "continue?(y/n): " response
+#[ "$response" != "y" ] && exit
 
 clear
 echo "Copying my config files..."
 cd /tmp
 git clone https://github.com/kibybyte/i3-xorg
-cd i3-xorg
+cd i3-xorg || exit 1
 rm -rf ./LICENSE
-read -p "Include my scripts found at kibybyte/bin? Not having them may break some minor stuff. (y/n)" binchoice
+read -r -p "Include my scripts found at kibybyte/bin? Not having them may break some minor stuff. (y/n)" binchoice
 if [ "$binchoice" = "y" ] ; then
-	mkdir -p $HOME/.local
+	mkdir -p "$HOME"/.local
 	git clone https://github.com/kibybyte/bin
 	rm bin/LICENSE
-	mv bin $HOME/.local/
+	mv bin "$HOME"/.local/
 fi
 
 for file in ./*
@@ -41,12 +41,12 @@ do
     then
         mkdir -p "${location%/*}"
     fi
-    cat $file > $location
+    cp $file $location
 done
 
 clear
 echo "installing packages" && sleep 5
-sudo pacman -Syu xorg-server xwallpaper i3-gaps i3blocks maim pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc firefox dunst redshift feh light xorg-xinit alacritty xclip
+sudo pacman -Syu xorg-server xwallpaper i3-gaps i3blocks maim pipewire pipewire-alsa pipewire-pulse bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet dmenu ranger mate-calc firefox dunst redshift feh light xorg-xinit xfce4-terminal xclip
 
 paru --version || { git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric; }
 

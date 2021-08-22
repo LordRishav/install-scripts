@@ -11,22 +11,21 @@ fi
 
 
 lsblk
-echo "select disk(eg: sda, not sda1): "
-read disk
-cgdisk /dev/$disk
+read -p "select disk(eg: sda, not sda1): " disk
+cgdisk /dev/"$disk"
 
 clear
 echo "Press Ctrl+D to skip mountpoint. Order is root, then boot, then home."
 echo "Partition names to be selected only. eg: choose sda1 instead of /dev/sda1"
-lsblk
-echo "select root partition: "
-read root && mkfs.ext4 /dev/$root && mount /dev/$root /mnt || exit
-lsblk
-echo "select boot partition: "
-read boot && mkfs.fat -F32 /dev/$boot && mkdir /mnt/boot && mount /dev/$boot /mnt/boot || exit
-lsblk
-echo "select home partition: "
-read home && mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
+lsblk && echo "Press Ctrl+D to skip mountpoint."
+read -p "select root partition: " root
+mkfs.ext4 /dev/$root && mount /dev/$root /mnt || exit
+lsblk && echo "Press Ctrl+D to skip mountpoint."
+read -p "select boot partition: " boot
+mkfs.fat -F32 /dev/$boot && mkdir /mnt/boot && mount /dev/$boot /mnt/boot || exit
+lsblk && echo "Press Ctrl+D to skip mountpoint."
+read -p "select home partition: " home
+mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
 clear
 
 reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
@@ -67,20 +66,19 @@ LC_NUMERIC=en_IN.UTF-8" >> /mnt/etc/locale.conf
 
 clear
 
-echo "Set hostname of machine: "
-read hostname
+read -p "Set hostname of machine: " hostname
 echo "$hostname" > /mnt/etc/hostname
 
-echo "127.0.0.1       localhost" >> /mnt/etc/hosts
-echo "::1             localhost" >> /mnt/etc/hosts
-echo "127.0.1.1       $hostname.localdomain $hostname" >> /mnt/etc/hosts
+echo "127.0.0.1       localhost
+::1             localhost
+127.0.1.1       $hostname.localdomain $hostname" >> /mnt/etc/hosts
 
 echo "Set root password"
 arch-chroot /mnt passwd
 
-echo "username: "
-read username
+read -p "username: " username
 arch-chroot /mnt useradd -m -G wheel $username
+sed -i '85i \%wheel ALL=(ALL) NOPASSWD: ALL' /mnt/etc/sudoers || echo "WARNING: run visudo on reboot and correct as required."
 arch-chroot /mnt passwd $username
 
 umount -R /mnt
