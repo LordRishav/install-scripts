@@ -30,7 +30,7 @@ mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
 clear
 
 reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel git linux linux-firmware neovim nano sudo man-db man-pages texinfo networkmanager $cpu-ucode dash
+pacstrap /mnt base base-devel git linux linux-firmware neovim nano sudo man-db man-pages texinfo $cpu-ucode dash
 genfstab -U /mnt >> /mnt/etc/fstab
 
 mkdir -p /mnt/boot/loader/entries
@@ -47,9 +47,42 @@ initrd  /$cpu-ucode.img
 initrd  /initramfs-linux.img
 options	 root=UUID=$uuid rw" > /mnt/boot/loader/entries/arch.conf
 
-arch-chroot /mnt systemctl enable NetworkManager
+
+arch-chroot /mnt systemctl enable systemd-networkd
+echo "#  SPDX-License-Identifier: LGPL-2.1-or-later
+#
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+
+[Unit]
+Description=Wait for Network to be Configured
+Documentation=man:systemd-networkd-wait-online.service(8)
+DefaultDependencies=no
+Conflicts=shutdown.target
+Requires=systemd-networkd.service
+After=systemd-networkd.service
+Before=network-online.target shutdown.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any
+RemainAfterExit=yes
+
+[Install]
+WantedBy=network-online.target" > /mnt/etc/systemd/system/systemd-networkd-wait-online.service
+
+echo "[Match]
+Name=en*
+
+[Network]
+DHCP=yes" > /mnt/etc/systemd/network/20-wired.network
+
+
 timedatectl set-local-rtc 0
-arch-chroot /mnt timedatectl set-timezone Asia/Kolkata
 arch-chroot /mnt ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
 timedatectl set-ntp true
 arch-chroot /mnt hwclock --systohc
