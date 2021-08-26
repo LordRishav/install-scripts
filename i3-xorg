@@ -47,7 +47,7 @@ done
 
 clear
 echo "installing packages" && sleep 5
-sudo pacman -Syu xorg-server xwallpaper i3-gaps i3blocks maim pipewire pipewire-alsa pipewire-pulse bluez bluez-utils fish ttf-jetbrains-mono pango ranger mate-calc firefox dunst redshift feh light xorg-xinit xfce4-terminal xclip gvfs gvfs-mtp nemo xorg-xinput xorg-xev github-cli ttf-joypixels noto-fonts-emoji noto-fonts-cjk
+sudo pacman -Syu xorg-server xwallpaper i3-gaps i3blocks maim pipewire pipewire-alsa pipewire-pulse bluez bluez-utils fish ttf-jetbrains-mono pango ranger mate-calc firefox dunst redshift feh light xorg-xinit xfce4-terminal xclip gvfs gvfs-mtp nemo xorg-xinput xorg-xev github-cli ttf-joypixels noto-fonts-emoji noto-fonts-cjk p7zip
 
 paru --version || { git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric; }
 
