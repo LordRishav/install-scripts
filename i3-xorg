@@ -65,3 +65,10 @@ clear
 mkdir -p "$HOME"/pics/ss "$HOME"/docs "$HOME"/down "$HOME"/vids "$HOME"/music
 cd "$HOME"/pics
 git clone https://github.com/kibybyte/wallpapers
+
+clear
+echo "Adding vim-plug and plugins" && sleep 3
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+mkdir -p ~/.config/nvim/plugged
+sudo pacman -S python-pynvim
