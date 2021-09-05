@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 grep LC_CTYPE /etc/locale.conf || echo "LC_CTYPE=en_gb.utf8" >> /etc/locale.conf
-sudo pacman -Syu sxhkd dunst picom lxsession network-manager-applet xfce4-clipman-plugin redshift xorg-xmodmap xwallpaper ranger rofi xorg-xrdb xorg-xinput xorg-xrandr libx11 maim pipewire pipewire-alsa pipewire-pulse bluez bluez-utils fish ttf-jetbrains-mono mate-calc firefox light xfce4-terminal xclip gvfs gvfs-mtp nemo github-cli ttf-joypixels noto-fonts-emoji noto-fonts-cjk p7zip dash
+sudo pacman -Syu sxhkd dunst picom lxsession network-manager-applet xfce4-clipman-plugin redshift xorg-xmodmap xwallpaper ranger rofi xorg-xrdb xorg-xinput xorg-xrandr libx11 maim pipewire pipewire-alsa pipewire-pulse bluez bluez-utils fish ttf-jetbrains-mono mate-calc firefox light xfce4-terminal xclip gvfs gvfs-mtp nemo github-cli ttf-joypixels noto-fonts-emoji noto-fonts-cjk p7zip dash xorg-xsetroot
 
 clear
 cd /tmp && git clone https://github.com/kibybyte/dwmrice && rm -rf dwmrice/LICENSE
