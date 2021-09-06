@@ -38,3 +38,5 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 mkdir -p ~/.config/nvim/plugged
 sudo pacman -S python-pynvim
 cd /tmp && git clone https://github.com/kibybyte/dwm && cd dwm && sudo make clean install
+cd /tmp && git clone https://github.com/kibybyte/st && cd st && sudo make clean install
+cd /tmp && git clone https://github.com/kibybyte/dwmblocks && cd dwmblocks && sudo make clean install
