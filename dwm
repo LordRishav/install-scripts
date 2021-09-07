@@ -3,8 +3,8 @@
 sudo pacman -Syu sxhkd dunst picom lxsession network-manager-applet xfce4-clipman-plugin redshift xorg-xmodmap xwallpaper ranger rofi xorg-xrdb xorg-xinput xorg-xrandr libx11 maim pipewire pipewire-alsa pipewire-pulse bluez bluez-utils fish ttf-jetbrains-mono mate-calc firefox light xfce4-terminal xclip gvfs gvfs-mtp nemo github-cli ttf-joypixels noto-fonts-emoji noto-fonts-cjk p7zip dash xorg-xsetroot
 
 clear
-cd /tmp && git clone https://github.com/kibybyte/dwmrice && rm -rf dwmrice/LICENSE
-for file in dwmrice/*
+cd /tmp && git clone https://github.com/kibybyte/dots && rm -rf dots/LICENSE
+for file in dots/*
 do
     location=$(cat $file | head -2 | tail -1 | awk '{printf $2}')
     location="$(eval "echo $location")"

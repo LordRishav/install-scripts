@@ -23,8 +23,8 @@ read -r -p "continue?(y/n): " response
 clear
 echo "Copying my config files..."
 cd /tmp
-git clone https://github.com/kibybyte/i3-xorg
-cd i3-xorg 
+git clone https://github.com/kibybyte/dots
+cd dots 
 rm -rf ./LICENSE
 read -r -p "Include my scripts found at kibybyte/bin? Not having them may break some minor stuff. (y/n)" binchoice
 if [ "$binchoice" = "y" ] ; then
