@@ -1,6 +1,5 @@
-#!/bin/sh
-set -e
-grep LC_CTYPE /etc/locale.conf || echo "LC_CTYPE=en_gb.utf8" >> /etc/locale.conf
+#!/bin/bash
+#sudo grep LC_CTYPE /etc/locale.conf || sudo echo "LC_CTYPE=en_gb.utf8" >> /etc/locale.conf
 sudo pacman -Syu sxhkd dunst picom lxsession network-manager-applet xfce4-clipman-plugin redshift xorg-xmodmap xwallpaper ranger rofi xorg-xrdb xorg-xinput xorg-xrandr libx11 maim pipewire pipewire-alsa pipewire-pulse bluez bluez-utils fish ttf-jetbrains-mono mate-calc firefox light xfce4-terminal xclip gvfs gvfs-mtp nemo github-cli ttf-joypixels noto-fonts-emoji noto-fonts-cjk p7zip dash xorg-xsetroot
 
 clear
@@ -16,10 +15,10 @@ do
     cp $file $location
 done
 
-mkdir -p ~/.local && git clone https://github.com/kibybyte/bin ~/.local/bin
+mkdir -p ~/.local && git -C "$HOME"/.local/bin clone --depth=1 https://github.com/kibybyte/bin 
 
 paru --version || { git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric; }
-paru -S ttf-ms-fonts adwaita-qt clipman motivate libxft-bgra 
+paru -S ttf-ms-fonts adwaita-qt motivate libxft-bgra 
 
 clear
 chsh -s /usr/bin/fish
@@ -27,9 +26,8 @@ chsh -s /usr/bin/fish
 sudo usermod -aG video $USER
 
 clear
-mkdir -p "$HOME"/pics/ss "$HOME"/docs "$HOME"/down "$HOME"/vids "$HOME"/music
-cd "$HOME"/pics
-git clone https://github.com/kibybyte/wallpapers
+mkdir -p "$HOME"/{pics/ss,docs,down,vids,music}
+git -C "$HOME"/pics clone --depth=1 https://github.com/kibybyte/wallpapers
 
 clear
 echo "Adding vim-plug and plugins" && sleep 3
@@ -37,6 +35,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 mkdir -p ~/.config/nvim/plugged
 sudo pacman -S python-pynvim
-cd /tmp && git clone https://github.com/kibybyte/dwm && cd dwm && sudo make clean install
-cd /tmp && git clone https://github.com/kibybyte/st && cd st && sudo make clean install
-cd /tmp && git clone https://github.com/kibybyte/dwmblocks && cd dwmblocks && sudo make clean install
+
+for i in {dwm,st,dwmblocks}; do 
+	git -C /tmp clone --depth=1 "https://github.com/kibybyte/${i}" && sudo make -C /tmp/$i install
+done
