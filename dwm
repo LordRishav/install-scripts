@@ -15,7 +15,7 @@ do
     cp $file $location
 done
 
-mkdir -p ~/.local && git -C "$HOME"/.local/bin clone --depth=1 https://github.com/kibybyte/bin 
+mkdir -p ~/.local && git -C "$HOME"/.local clone --depth=1 https://github.com/kibybyte/bin 
 
 paru --version || { git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric; }
 paru -S ttf-ms-fonts adwaita-qt motivate libxft-bgra 
