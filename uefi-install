@@ -30,7 +30,7 @@ mkfs.ext4 /dev/$home && mkdir /mnt/home && mount /dev/$home /mnt/home
 clear
 
 reflector --verbose --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel git linux linux-firmware neovim nano sudo man-db man-pages texinfo $cpu-ucode dash
+pacstrap /mnt base base-devel git linux linux-firmware neovim nano sudo man-db man-pages texinfo $cpu-ucode dash networkmanager
 genfstab -U /mnt >> /mnt/etc/fstab
 
 mkdir -p /mnt/boot/loader/entries
@@ -47,18 +47,19 @@ initrd  /$cpu-ucode.img
 initrd  /initramfs-linux.img
 options	 root=UUID=$uuid rw" > /mnt/boot/loader/entries/arch.conf
 
+arch-chroot /mnt systemctl enable NetworkManager
 
-arch-chroot /mnt systemctl enable systemd-networkd
-mkdir -p /mnt/etc/systemd/system/systemd-networkd-wait-online.service.d/
-echo "[Service]
-ExecStart=
-ExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any" > /mnt/etc/systemd/system/systemd-networkd-wait-online.service.d/override.conf
-
-echo "[Match]
-Name=en*
-
-[Network]
-DHCP=yes" > /mnt/etc/systemd/network/20-wired.network
+#arch-chroot /mnt systemctl enable systemd-networkd
+#mkdir -p /mnt/etc/systemd/system/systemd-networkd-wait-online.service.d/
+#echo "[Service]
+#ExecStart=
+#ExecStart=/usr/lib/systemd/systemd-networkd-wait-online --any" > /mnt/etc/systemd/system/systemd-networkd-wait-online.service.d/override.conf
+#
+#echo "[Match]
+#Name=en*
+#
+#[Network]
+#DHCP=yes" > /mnt/etc/systemd/network/20-wired.network
 
 
 timedatectl set-local-rtc 0
