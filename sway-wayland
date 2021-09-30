@@ -4,10 +4,18 @@ echo "This install script installs sway WM and related tools. It uses the Waylan
 
 echo "Dependencies: git, pacman, a vanilla install of Arch Linux with the base-devel package "
 
-echo "Packages which will be installed: sway waybar wl-clipboard lxterminal grim slurp 
-neovim otf-font-awesome pipewire pipewire-alsa pipewire-pulse 
-bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet 
-ranger mate-calc chromium dunst light ttf-ms-fonts adwaita-qt clipman"
+echo "Packages that will be installed: sway waybar wl-clipboard dash bat mpv imv zathura \
+zathura-pdf-mupdf alacritty grim slurp neovim otf-font-awesome pipewire pipewire-pulse \
+pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger \
+mate-calc dunst light lxsession gammastep"
+
+echo "Change /bin/sh to dash?(y/n) "
+echo "select n if you want to be safe and are new to linux"
+read choice
+ 
+read -p "Include my scripts found at kibybyte/bin? Not having them may break some minor stuff. (y/n)" binchoice
+
+read -p "Do you want wallpapers? (y/n)" wallchoice
 
 echo "Continue? (y/n)"
 read response
@@ -16,7 +24,6 @@ read response
 git clone https://github.com/kibybyte/sway || exit
 cd sway || exit 
 rm -f ./LICENSE
-read -p "Include my scripts found at kibybyte/bin? Not having them may break some minor stuff. (y/n)" binchoice
 if [ "$binchoice" = "y" ] ; then
 	mkdir -p $HOME/.local
 	git clone https://github.com/kibybyte/bin
@@ -33,20 +40,20 @@ do
 done
 
 
-sudo pacman -S sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mupdf alacritty grim slurp neovim otf-font-awesome pipewire pipewire-pulse pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light lxsession gammastep firefox
+sudo pacman -S --noconfirm sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mupdf alacritty grim slurp neovim otf-font-awesome pipewire pipewire-pulse pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light lxsession gammastep firefox
 
-paru --version || git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric
+paru --version || git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric --noconfirm
 
-paru -S ttf-ms-fonts adwaita-qt clipman motivate 
+paru -S --noconfirm ttf-ms-fonts adwaita-qt clipman motivate 
 
 chsh -s /usr/bin/fish
-echo "Change /bin/sh to dash?(y/n) "
-echo "select n if you want to be safe and are new to linux"
-read choice
-[ "$choice" = "y" ] && sudo ln -sf /usr/bin/dash /bin/sh
+if [ "$choice" = "y" ] && sudo ln -sf /usr/bin/dash /bin/sh
 sudo usermod -aG video $USER
 
 clear
-mkdir -p $HOME/pics
-cd $HOME/pics
-git clone https://github.com/kibybyte/wallpapers
+if [ "$wallchoice" = "y" ] ; then
+		mkdir -p $HOME/pics
+		cd $HOME/pics
+		git clone https://github.com/kibybyte/wallpapers
+fi
+echo "done"
