@@ -11,26 +11,26 @@ mate-calc dunst light lxsession gammastep"
 
 echo "Change /bin/sh to dash?(y/n) "
 echo "select n if you want to be safe and are new to linux"
-read choice
+read -r choice
  
-read -p "Include my scripts found at kibybyte/bin? Not having them may break some minor stuff. (y/n)" binchoice
+read -r -p "Include my scripts found at kibybyte/bin? Not having them may break some minor stuff. (y/n)" binchoice
 
-read -p "Do you want wallpapers? (y/n)" wallchoice
+read -r -p "Do you want wallpapers? (y/n)" wallchoice
 
-read -p "Do you want Firefox? (y/n)" firechoice
+read -r -p "Do you want Firefox? (y/n)" firechoice
 
 echo "Continue? (y/n)"
-read response
-[ $response = "y" ] || exit
+read -r response
+[ "$response" = "y" ] || exit
 
 git clone https://github.com/kibybyte/sway || exit
 cd sway || exit 
 rm -f ./LICENSE
 if [ "$binchoice" = "y" ] ; then
-	mkdir -p $HOME/.local
+	mkdir -p "$HOME"/.local
 	git clone https://github.com/kibybyte/bin
 	rm bin/LICENSE
-	mv bin $HOME/.local/
+	mv bin "$HOME"/.local/
 fi
 
 for file in ./*
@@ -44,20 +44,20 @@ done
 
 sudo pacman -S --noconfirm sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mupdf alacritty grim slurp neovim otf-font-awesome pipewire pipewire-pulse pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light lxsession gammastep
 
-if [ "$firechoice" = "y"] && sudo pacman -S --noconfirm firefox
+[ "$firechoice" = "y" ] && sudo pacman -S --noconfirm firefox
 
 paru --version || git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric --noconfirm
 
 paru -S --noconfirm ttf-ms-fonts adwaita-qt clipman motivate 
 
 chsh -s /usr/bin/fish
-if [ "$choice" = "y" ] && sudo ln -sf /usr/bin/dash /bin/sh
-sudo usermod -aG video $USER
+[ "$choice" = "y" ] && sudo ln -sf /usr/bin/dash /bin/sh
+sudo usermod -aG video "$USER"
 
 clear
 if [ "$wallchoice" = "y" ] ; then
-		mkdir -p $HOME/pics
-		cd $HOME/pics
+		mkdir -p "$HOME"/pics
+		cd "$HOME"/pics
 		git clone https://github.com/kibybyte/wallpapers
 fi
 echo "done"
