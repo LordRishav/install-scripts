@@ -17,6 +17,8 @@ read -p "Include my scripts found at kibybyte/bin? Not having them may break som
 
 read -p "Do you want wallpapers? (y/n)" wallchoice
 
+read -p "Do you want Firefox? (y/n)" firechoice
+
 echo "Continue? (y/n)"
 read response
 [ $response = "y" ] || exit
@@ -40,7 +42,9 @@ do
 done
 
 
-sudo pacman -S --noconfirm sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mupdf alacritty grim slurp neovim otf-font-awesome pipewire pipewire-pulse pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light lxsession gammastep firefox
+sudo pacman -S --noconfirm sway waybar wl-clipboard dash bat mpv imv zathura zathura-pdf-mupdf alacritty grim slurp neovim otf-font-awesome pipewire pipewire-pulse pipewire-alsa bluez bluez-utils fish ttf-jetbrains-mono pango network-manager-applet ranger mate-calc dunst light lxsession gammastep
+
+if [ "$firechoice" = "y"] && sudo pacman -S --noconfirm firefox
 
 paru --version || git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -sric --noconfirm
 
